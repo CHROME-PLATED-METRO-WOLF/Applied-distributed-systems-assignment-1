@@ -1,10 +1,7 @@
 
 package tcp.client;
 
-/**
- *
- * @author caleb
- */
+
 public class TCPClient {
 
     /**
