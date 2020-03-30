@@ -33,24 +33,13 @@ class Connection extends Thread {
     public void run() {
         
         //message loop, all logic will probably be done in here
+        while (clientSocket.isConnected()) {
+            //example of reading in an object
+            // messageBox message = (messageBox) in.readObject();
+        }
         try {
-            while (clientSocket.isConnected()) {
-                //example of reading in an object
-                messageBox message = (messageBox) in.readObject();
-                
-            }
-
-        } catch (EOFException e) {
-            System.out.println("EOF:" + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("readline:" + e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                clientSocket.close();
-            } catch (IOException e) {/*close failed*/
-            }
+            clientSocket.close();
+        } catch (IOException e) {/*close failed*/
         }
 
     }
