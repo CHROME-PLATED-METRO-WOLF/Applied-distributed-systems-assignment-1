@@ -1,3 +1,4 @@
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -6,7 +7,7 @@ import java.net.Socket;
 
 class Connection extends Thread {
 // when a user connects this class is created for that user and handles all processing
-  
+
     //In and out streams for sending and recieving data
     ObjectInputStream in;
     ObjectOutputStream out;
@@ -31,7 +32,7 @@ class Connection extends Thread {
     }
 
     public void run() {
-        
+
         //message loop, all logic will probably be done in here
         while (clientSocket.isConnected()) {
             //example of reading in an object
@@ -40,6 +41,7 @@ class Connection extends Thread {
         try {
             clientSocket.close();
         } catch (IOException e) {/*close failed*/
+            System.out.println("Error closing socket!");
         }
 
     }
