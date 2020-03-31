@@ -18,7 +18,7 @@ public class Student {
         this.pinCode = pinCode;
     }
 
-    //sets tge student number
+    //sets the student number
     void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
     }
@@ -49,3 +49,4 @@ public class Student {
     }
 
 }
+//end class
