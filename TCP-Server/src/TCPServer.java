@@ -2,13 +2,18 @@
 //package tcpserver;
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TCPServer {
 
-    final int defaultServerPort = 8888;
+    final static int defaultServerPort = 8888;
     static int serverPort;
     int maxConnections = 100;
+    static ArrayList<Student> studentList = new ArrayList();
+    static ArrayList<LogEntry> logList = new ArrayList();
+    static String studentFileName;
+    static String logFileName;
 
     public static void main(String args[]) {
 
