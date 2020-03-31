@@ -19,11 +19,13 @@ class Connection extends Thread {
     ArrayList<LogEntry> logList = new ArrayList();
 
     //default constructor
-    public Connection(Socket aClientSocket) {
+    public Connection(Socket clientSocket, ArrayList<Student> studentList, ArrayList<LogEntry> logList) {
+        this.studentList = studentList;
+        this.logList = logList;
 
         try {
             //the socket is passed in and assigned to a variable so we can access information about the clients session
-            clientSocket = aClientSocket;
+
             //creating the input and output streams
             in = new ObjectInputStream(clientSocket.getInputStream());
             out = new ObjectOutputStream(clientSocket.getOutputStream());
