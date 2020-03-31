@@ -1,8 +1,8 @@
 
 public class LogEntry {
-String studentNumber;
-int pinCode;
-String dateTime;
+private String studentNumber;
+private int pinCode;
+private String dateTime;
 
 
 LogEntry()
