@@ -1,9 +1,9 @@
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 class Connection extends Thread {
 // when a user connects this class is created for that user and handles all processing
@@ -13,6 +13,10 @@ class Connection extends Thread {
     ObjectOutputStream out;
     //socket variable
     Socket clientSocket;
+    //create array list which stores students
+    ArrayList<Student> studentList = new ArrayList();
+    //create array list which stores all log entrys
+    ArrayList<LogEntry> logList = new ArrayList();
 
     //default constructor
     public Connection(Socket aClientSocket) {
