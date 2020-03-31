@@ -1,56 +1,56 @@
 
 public class LogEntry {
-private String studentNumber;
-private int pinCode;
-private String dateTime;
 
+    private String studentNumber;
+    private int pinCode;
+    private String dateTime;
 
-LogEntry()
-{
-    
-}
+    //default constructor which does nothing :)
+    LogEntry() {
 
-LogEntry(String studentNumber, String dateTime)
-{
-    this.studentNumber = studentNumber;
-    this.dateTime = dateTime;
-}
+    }
 
-LogEntry(String studentNumber, String dateTime, int pinCode)
-{
-    this.studentNumber = studentNumber;
-    this.dateTime = dateTime;
-    this.pinCode = pinCode;
-}
+    //constructor that sets student number and date time
+    LogEntry(String studentNumber, String dateTime) {
+        this.studentNumber = studentNumber;
+        this.dateTime = dateTime;
+    }
 
-void setStudentNumber(String studentNumber)
-{
-    this.studentNumber = studentNumber;
-}
+    //constructor that sets all variables
+    LogEntry(String studentNumber, String dateTime, int pinCode) {
+        this.studentNumber = studentNumber;
+        this.dateTime = dateTime;
+        this.pinCode = pinCode;
+    }
 
-String getStudentNumber()
-{
-    return this.studentNumber;
-}
+    //setter for student number
+    void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
+    }
 
-void setPinCode(int pinCode)
-{
-    this.pinCode = pinCode;
-}
+    //getter for student number
+    String getStudentNumber() {
+        return this.studentNumber;
+    }
 
-int getPinCode()
-{
-    return this.pinCode;
-}
+    //setter for pincode
+    void setPinCode(int pinCode) {
+        this.pinCode = pinCode;
+    }
 
-void setDateTime(String dateTime)
-{
-    this.dateTime = dateTime;
-}
+//getter for pincode
+    int getPinCode() {
+        return this.pinCode;
+    }
 
-String getDatetime()
-{
-    return this.dateTime;
-}
+    //setter for date and time
+    void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    //getter for date and time
+    String getDatetime() {
+        return this.dateTime;
+    }
 
 }
