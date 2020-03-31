@@ -53,4 +53,11 @@ public class LogEntry {
         return this.dateTime;
     }
 
+    
+    @Override
+    public String toString()
+    {
+        return "Student: " + studentNumber + " Pin Code: " + pinCode + " Date Time: " + dateTime;
+        
+    }
 }
