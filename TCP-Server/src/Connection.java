@@ -31,6 +31,7 @@ class Connection extends Thread {
             //the socket is passed in and assigned to a variable so we can access information about the clients session
 
             //creating the input and output streams
+            clientSocket.setKeepAlive(true);
             in = new ObjectInputStream(clientSocket.getInputStream());
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             //starting THIS thread (will run the "run()" method
@@ -55,14 +56,14 @@ class Connection extends Thread {
 
             }
         } catch (IOException ex) {
-            System.out.println("Client disconnected :( : " + clientSocket.toString());
+            
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             clientSocket.close();
-            System.out.println("Socket closed");
+            
         } catch (IOException e) {/*close failed*/
             System.out.println("Error closing socket!");
 
@@ -72,26 +73,13 @@ class Connection extends Thread {
 
     }
     
-    void sendAlive()
-    {
-        
-        try {
-            out.writeByte(12);
-        } catch (IOException ex) {
-            System.out.println("Keep alive failed terminating connection");
-            closeSocket();
-            
-        }
-        
-    }
-         
-    
+ 
     private void closeSocket()
     {
         try {
             clientSocket.close();
             clients.remove(this);
-            System.out.println("Num of Connections: " + clients.size());
+            System.out.println("Socket closed");
         } catch (IOException ex) {
             System.out.println("ERROR: CANT CLOSE SOCKET");
         }

@@ -17,7 +17,7 @@ public class TCPClient {
     public static void main(String[] args) {
 
         int count = 0;
-        while(count < 100)
+        while(count < 50)
         {
             try {
                 Thread.sleep(100);
@@ -44,7 +44,7 @@ public class TCPClient {
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
                 in = new ObjectInputStream(clientSocket.getInputStream());
                 int i = 0;
-                while (i < 100) {
+                while (i < 50) {
 
                     Thread.sleep(1000);
                     out.writeObject("test");

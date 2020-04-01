@@ -29,11 +29,6 @@ public class TCPServer {
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
         System.out.println("Max Threads: " + argOptions.getMaxConnections());
 
-        //creating and starting the keep alive watchdog
-        
-        keepAlive keepAliveWatchdog = new keepAlive(clients, argOptions.getMsInterval(), argOptions.getMsDelay());
-        keepAliveWatchdog.start();
-        System.out.println("Watchdog started \n check interval: " + argOptions.getMsInterval() + "\n indevidual connection check delay: " + argOptions.getMsDelay());
         
         try {
             //server initialisations
