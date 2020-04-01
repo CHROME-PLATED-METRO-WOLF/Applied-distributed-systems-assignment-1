@@ -67,7 +67,35 @@ class Connection extends Thread {
             System.out.println("Error closing socket!");
 
         }
-        clients.remove(this);
+        
+       closeSocket(); 
 
     }
+    
+    void sendAlive()
+    {
+        
+        try {
+            out.writeByte(12);
+        } catch (IOException ex) {
+            System.out.println("Keep alive failed terminating connection");
+            closeSocket();
+            
+        }
+        
+    }
+         
+    
+    private void closeSocket()
+    {
+        try {
+            clientSocket.close();
+            clients.remove(this);
+            System.out.println("Num of Connections: " + clients.size());
+        } catch (IOException ex) {
+            System.out.println("ERROR: CANT CLOSE SOCKET");
+        }
+    }
+    
+    
 }
