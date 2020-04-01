@@ -17,10 +17,10 @@ public class TCPClient {
     public static void main(String[] args) {
 
         int count = 0;
-        while(count < 1)
+        while(count < 100)
         {
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -43,15 +43,18 @@ public class TCPClient {
                 System.out.println("Connected to server: " + clientSocket.getInetAddress() + " On port: " + clientSocket.getLocalPort());
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
                 in = new ObjectInputStream(clientSocket.getInputStream());
-
-                while (true) {
+                int i = 0;
+                while (i < 100) {
 
                     Thread.sleep(1000);
                     out.writeObject("test");
-                    System.out.println(in.readObject() + " " + this.getName());
+                    String reply = in.readObject().toString();
+                    System.out.println(reply + " " + this.getName());
+                    
+                    i++;
                 }
 
-                // clientSocket.close();
+                 clientSocket.close();
             } catch (IOException ex) {
                 Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
