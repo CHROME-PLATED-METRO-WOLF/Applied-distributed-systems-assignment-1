@@ -89,6 +89,7 @@ public class keepAlive extends Thread {
             } catch (InterruptedException ex) {
                 Logger.getLogger(keepAlive.class.getName()).log(Level.SEVERE, null, ex);
             }
+            System.out.println("Num of Connections: " + clients.size());
         }
     }
 
