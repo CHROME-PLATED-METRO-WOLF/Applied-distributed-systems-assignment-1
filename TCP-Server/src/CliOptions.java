@@ -18,6 +18,8 @@ public class CliOptions {
     private final String args[];
     private String programName = "program";
     private String helpOptionTxt;
+    private int msInterval = 300000;
+    private int msDelay = 100;
 
     private int serverPort;
     private int maxConnections = 100;
@@ -35,6 +37,8 @@ public class CliOptions {
         setHelpOption("h", "help", "display all options");
         addOption("p", "port", true, "custom port number", false);
         addOption("m", "max-connections", true, "custom port number", false);
+        addOption("cci", "connection-check-interval", true, "MS Time between connection checks", false);
+        addOption("ccd", "connection-check-delay", true, "MS Delay between checking each connection", false);
 
     }
 
@@ -94,6 +98,21 @@ public class CliOptions {
                 }
             }
 
+            if (cmd.hasOption("cci")) {
+                try {
+                    this.msInterval = Integer.parseInt(cmd.getOptionValue("cci"));
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a number for connection check interval");
+                }
+            }
+            if (cmd.hasOption("ccd")) {
+                try {
+                    this.msDelay = Integer.parseInt(cmd.getOptionValue("cci"));
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a number for connection check interval");
+                }
+            }
+
         } catch (ParseException e) {
             printHelp();
 
@@ -141,5 +160,21 @@ public class CliOptions {
 
     int getMaxConnections() {
         return this.maxConnections;
+    }
+
+    void setMsInterval(int interval) {
+        this.msInterval = interval;
+    }
+
+    int getMsInterval() {
+        return this.msInterval;
+    }
+
+    void setMsDelay(int delay) {
+        this.msDelay = delay;
+    }
+
+    int getMsDelay() {
+        return this.msDelay;
     }
 }
