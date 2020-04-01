@@ -80,6 +80,7 @@ class Connection extends Thread {
             clientSocket.close();
             clients.remove(this);
             System.out.println("Socket closed");
+            System.out.println("num of clients: " + clients.size());
         } catch (IOException ex) {
             System.out.println("ERROR: CANT CLOSE SOCKET");
         }

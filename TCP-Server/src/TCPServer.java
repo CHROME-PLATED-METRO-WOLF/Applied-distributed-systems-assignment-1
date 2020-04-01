@@ -29,7 +29,6 @@ public class TCPServer {
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
         System.out.println("Max Threads: " + argOptions.getMaxConnections());
 
-        
         try {
             //server initialisations
             //the port wont be hardcoded in the final product it will take a command line argument
@@ -52,6 +51,7 @@ public class TCPServer {
                     pool.execute(c);
 
                     clients.add(c);
+
                 } else {
                     try {
                         Thread.sleep(100);
