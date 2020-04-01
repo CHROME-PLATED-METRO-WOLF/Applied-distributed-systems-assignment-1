@@ -4,6 +4,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class Connection extends Thread {
 // when a user connects this class is created for that user and handles all processing
@@ -22,7 +24,7 @@ class Connection extends Thread {
     public Connection(Socket clientSocket, ArrayList<Student> studentList, ArrayList<LogEntry> logList) {
         this.studentList = studentList;
         this.logList = logList;
-
+        this.clientSocket = clientSocket;
         try {
             //the socket is passed in and assigned to a variable so we can access information about the clients session
 
@@ -40,14 +42,27 @@ class Connection extends Thread {
     public void run() {
 
         //message loop, all logic will probably be done in here
-        while (clientSocket.isConnected()) {
-            //example of reading in an object
-            // messageBox message = (messageBox) in.readObject();
+        try {
+            while (clientSocket.isConnected()) {
+
+                //example of reading in an object
+                // messageBox message = (messageBox) in.readObject();
+                String test = (String) in.readObject();
+
+                out.writeObject(test);
+
+            }
+        } catch (IOException ex) {
+            System.out.println("Client disconnected :( : " + clientSocket.toString());
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             clientSocket.close();
         } catch (IOException e) {/*close failed*/
             System.out.println("Error closing socket!");
+
         }
 
     }
