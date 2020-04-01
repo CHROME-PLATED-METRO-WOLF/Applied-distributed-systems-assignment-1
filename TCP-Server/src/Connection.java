@@ -19,12 +19,14 @@ class Connection extends Thread {
     ArrayList<Student> studentList = new ArrayList();
     //create array list which stores all log entrys
     ArrayList<LogEntry> logList = new ArrayList();
+    ArrayList<Thread> clients;
 
     //default constructor
-    public Connection(Socket clientSocket, ArrayList<Student> studentList, ArrayList<LogEntry> logList) {
+    public Connection(Socket clientSocket, ArrayList<Student> studentList, ArrayList<LogEntry> logList, ArrayList<Thread> clients) {
         this.studentList = studentList;
         this.logList = logList;
         this.clientSocket = clientSocket;
+        this.clients = clients;
         try {
             //the socket is passed in and assigned to a variable so we can access information about the clients session
 
@@ -60,10 +62,12 @@ class Connection extends Thread {
         }
         try {
             clientSocket.close();
+            System.out.println("Socket closed");
         } catch (IOException e) {/*close failed*/
             System.out.println("Error closing socket!");
 
         }
+        clients.remove(this);
 
     }
 }
