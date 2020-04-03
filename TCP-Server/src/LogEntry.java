@@ -1,5 +1,8 @@
 
-public class LogEntry {
+import java.io.Serializable;
+
+
+public class LogEntry implements Serializable  {
 
     private String studentNumber;
     private int pinCode;
