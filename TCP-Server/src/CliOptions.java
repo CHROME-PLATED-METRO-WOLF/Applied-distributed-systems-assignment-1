@@ -21,9 +21,10 @@ public class CliOptions {
     private int msInterval = 300000;
     private int msDelay = 100;
 
-    private int serverPort;
+    private int serverPort = 8888;
     private int maxConnections = 100;
-
+private int fileWriteDelay;
+    
     CliOptions(String args[]) {
         this.options = new Options();
         this.args = args;
@@ -39,6 +40,8 @@ public class CliOptions {
         addOption("m", "max-connections", true, "custom port number", false);
         addOption("cci", "connection-check-interval", true, "MS Time between connection checks", false);
         addOption("ccd", "connection-check-delay", true, "MS Delay between checking each connection", false);
+        addOption("fwd", "file-write-delay", true, "MS Delay writing data to files", false);
+
 
     }
 
@@ -113,6 +116,21 @@ public class CliOptions {
                 }
             }
 
+            if (cmd.hasOption("fwd"))
+            {
+               try {
+                    this.fileWriteDelay = Integer.parseInt(cmd.getOptionValue("fwd"));
+                    if(this.fileWriteDelay < 30000)
+                    {
+                        System.out.println("WARNING: file write delay is less than 30 seconds.");
+                    }
+                    
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a number the write delay");
+                } 
+            }
+            
+            
         } catch (ParseException e) {
             printHelp();
 
@@ -177,4 +195,11 @@ public class CliOptions {
     int getMsDelay() {
         return this.msDelay;
     }
+    
+    int getFileWriteDelay()
+    {
+        return this.fileWriteDelay;
+    }
+    
+    
 }
