@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class TCPServer {
 
     //Options options = new Options();
-    final static int defaultServerPort = 8888;
+   // final static int defaultServerPort = 8888;
 
     static ArrayList<Student> studentList = new ArrayList();
     static ArrayList<LogEntry> logList = new ArrayList();
@@ -34,6 +34,8 @@ public class TCPServer {
             //the port wont be hardcoded in the final product it will take a command line argument
             //and will have a default value of probs 8888
 
+            FileManager fileManager = new FileManager(studentList, logList, argOptions.getFileWriteDelay());
+            fileManager.start();
             ServerSocket listenSocket = new ServerSocket(argOptions.getServerPort());
 
             System.out.println("Server started on port: " + listenSocket.getLocalPort());
