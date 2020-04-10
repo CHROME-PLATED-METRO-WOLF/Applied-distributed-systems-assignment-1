@@ -28,6 +28,7 @@ class Connection extends Thread {
         this.logList = logList;
         this.clientSocket = clientSocket;
         this.clients = clients;
+        
         try {
             //the socket is passed in and assigned to a variable so we can access information about the clients session
 
@@ -39,7 +40,7 @@ class Connection extends Thread {
             this.start();
         } catch (IOException e) {
             //error
-            System.out.println("Connection:" + e.getMessage());
+            TCPServer.logger.log("Connection:" + e.getMessage());
         }
     }
 
@@ -66,7 +67,7 @@ class Connection extends Thread {
             clientSocket.close();
             
         } catch (IOException e) {/*close failed*/
-            System.out.println("Error closing socket!");
+            TCPServer.logger.log("Error closing socket!");
 
         }
         
@@ -80,10 +81,10 @@ class Connection extends Thread {
         try {
             clientSocket.close();
             clients.remove(this);
-            System.out.println("Socket closed");
-            System.out.println("num of clients: " + clients.size());
+            TCPServer.logger.log("Socket closed");
+            TCPServer.logger.log("num of clients: " + clients.size());
         } catch (IOException ex) {
-            System.out.println("ERROR: CANT CLOSE SOCKET");
+            TCPServer.logger.log("ERROR: CANT CLOSE SOCKET");
         }
     }
     
