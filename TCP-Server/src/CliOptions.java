@@ -23,8 +23,11 @@ public class CliOptions {
 
     private int serverPort = 8888;
     private int maxConnections = 100;
-private int fileWriteDelay;
-    
+    private int fileWriteDelay;
+
+    private int loggingLevel;
+    private String logFile;
+
     CliOptions(String args[]) {
         this.options = new Options();
         this.args = args;
@@ -41,7 +44,9 @@ private int fileWriteDelay;
         addOption("cci", "connection-check-interval", true, "MS Time between connection checks", false);
         addOption("ccd", "connection-check-delay", true, "MS Delay between checking each connection", false);
         addOption("fwd", "file-write-delay", true, "MS Delay writing data to files", false);
-
+        addOption("l", "log-level", true, "Logging level 0 = none (default) 1 = app output 2 = file logging 3 = file and app logging", false);
+        addOption("lf", "log-file", true, "Log file name default is lastRun.log NOTE: log-level must be set to 2 or 3 to log to file", false);
+        addOption("v", "version", true, "Displays version informtion", false);
 
     }
 
@@ -106,6 +111,7 @@ private int fileWriteDelay;
                     this.msInterval = Integer.parseInt(cmd.getOptionValue("cci"));
                 } catch (NumberFormatException e) {
                     System.out.println("Please enter a number for connection check interval");
+                    exit();
                 }
             }
             if (cmd.hasOption("ccd")) {
@@ -113,24 +119,55 @@ private int fileWriteDelay;
                     this.msDelay = Integer.parseInt(cmd.getOptionValue("cci"));
                 } catch (NumberFormatException e) {
                     System.out.println("Please enter a number for connection check interval");
+                    exit();
                 }
             }
 
-            if (cmd.hasOption("fwd"))
-            {
-               try {
+            if (cmd.hasOption("fwd")) {
+                try {
                     this.fileWriteDelay = Integer.parseInt(cmd.getOptionValue("fwd"));
-                    if(this.fileWriteDelay < 30000)
-                    {
+                    if (this.fileWriteDelay < 30000) {
                         System.out.println("WARNING: file write delay is less than 30 seconds.");
                     }
-                    
+
                 } catch (NumberFormatException e) {
                     System.out.println("Please enter a number the write delay");
-                } 
+                    exit();
+                }
+
+            }
+
+            if (cmd.hasOption("l")) {
+                try {
+                    this.loggingLevel = Integer.parseInt(cmd.getOptionValue("l"));
+                    if (this.loggingLevel < 0 || this.loggingLevel > 3) {
+                        System.out.println("Error please enter a number between 0 and 3");
+                        exit();
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Error please enter a number between 0 and 3");
+                    exit();
+                }
+            }
+
+            if (cmd.hasOption("lf")) {
+
+                this.logFile = cmd.getOptionValue("lf");
+
             }
             
             
+            if (cmd.hasOption("v")) {
+               
+                    
+                    System.out.println("Version Alpha 0.1 \n test version \n Built 10/04/2020 8:21:16");
+
+                
+            }
+            
+            
+
         } catch (ParseException e) {
             printHelp();
 
@@ -195,11 +232,9 @@ private int fileWriteDelay;
     int getMsDelay() {
         return this.msDelay;
     }
-    
-    int getFileWriteDelay()
-    {
+
+    int getFileWriteDelay() {
         return this.fileWriteDelay;
     }
-    
-    
+
 }
