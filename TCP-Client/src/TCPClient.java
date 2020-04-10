@@ -14,7 +14,7 @@ public class TCPClient {
     public static void main(String[] args) {
 
         int count = 0;
-        while (count < 100) {
+        while (count < 500) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
@@ -35,7 +35,7 @@ public class TCPClient {
                 ObjectOutputStream out = null;
                 ObjectInputStream in = null;
 
-                Socket clientSocket = new Socket("192.168.1.111", 8888);
+                Socket clientSocket = new Socket("192.168.1.109", 8888);
                 System.out.println("Connected to server: " + clientSocket.getInetAddress() + " On port: " + clientSocket.getLocalPort());
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
                 in = new ObjectInputStream(clientSocket.getInputStream());
