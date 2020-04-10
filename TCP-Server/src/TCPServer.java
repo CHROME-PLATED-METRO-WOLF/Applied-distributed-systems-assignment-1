@@ -28,9 +28,19 @@ public class TCPServer {
         } else if (argOptions.getLoggingLevel() == 1) {
             logger = new Logger(true, false);
         } else if (argOptions.getLoggingLevel() == 2) {
-            logger = new Logger(false, true, argOptions.getLogFile());
+            if (checkIfNull(argOptions.getLogFile()) == true) {
+                logger = new Logger(false, true);
+            } else {
+                logger = new Logger(false, true, argOptions.getLogFile());
+            }
+
         } else if (argOptions.getLoggingLevel() == 3) {
-            logger = new Logger(true, true, argOptions.getLogFile());
+            if (checkIfNull(argOptions.getLogFile()) == true) {
+                logger = new Logger(true, true);
+            } else {
+                logger = new Logger(true, true, argOptions.getLogFile());
+            }
+
         }
 
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
@@ -74,6 +84,13 @@ public class TCPServer {
             System.out.println("Listen socket:" + e.getMessage());
         }
 
+    }
+
+    static boolean checkIfNull(Object a) {
+        if (a == null) {
+            return true;
+        }
+        return false;
     }
 
 }
