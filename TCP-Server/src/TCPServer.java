@@ -5,14 +5,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TCPServer {
 
     //Options options = new Options();
-   // final static int defaultServerPort = 8888;
-
+    // final static int defaultServerPort = 8888;
     static ArrayList<Student> studentList = new ArrayList();
     static ArrayList<LogEntry> logList = new ArrayList();
     static ArrayList<Thread> clients = new ArrayList();
@@ -25,6 +22,16 @@ public class TCPServer {
         argOptions.setPredefined();
         argOptions.setProgramName("TCPServer");
         argOptions.parseOptions();
+        Logger logger;
+        if (argOptions.getLoggingLevel() == 0) {
+            logger = new Logger(false, false);
+        } else if (argOptions.getLoggingLevel() == 1) {
+            logger = new Logger(true, false);
+        } else if (argOptions.getLoggingLevel() == 2) {
+            logger = new Logger(false, true, argOptions.getLogFile());
+        } else if (argOptions.getLoggingLevel() == 3) {
+            logger = new Logger(true, true, argOptions.getLogFile());
+        }
 
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
         System.out.println("Max Threads: " + argOptions.getMaxConnections());
@@ -58,7 +65,7 @@ public class TCPServer {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
+
                     }
                 }
             }
