@@ -3,6 +3,8 @@
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,7 +14,8 @@ public class TCPServer {
     // final static int defaultServerPort = 8888;
     static ArrayList<Student> studentList = new ArrayList();
     static ArrayList<LogEntry> logList = new ArrayList();
-    static ArrayList<Thread> clients = new ArrayList();
+    //static ArrayList<Thread> clients = new ArrayList();
+   static List<Thread> clients = Collections.synchronizedList(new ArrayList());
     public static String studentFileName;
     public static String logFileName;
 
