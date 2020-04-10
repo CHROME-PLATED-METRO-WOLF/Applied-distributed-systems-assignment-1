@@ -1,4 +1,5 @@
 
+import java.lang.management.ManagementFactory;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -46,7 +47,7 @@ public class CliOptions {
         addOption("fwd", "file-write-delay", true, "MS Delay writing data to files", false);
         addOption("l", "log-level", true, "Logging level 0 = none (default) 1 = app output 2 = file logging 3 = file and app logging", false);
         addOption("lf", "log-file", true, "Log file name default is lastRun.log NOTE: log-level must be set to 2 or 3 to log to file", false);
-        addOption("v", "version", true, "Displays version informtion", false);
+        addOption("v", "version", false, "Displays version informtion", false);
 
     }
 
@@ -160,6 +161,10 @@ public class CliOptions {
             if (cmd.hasOption("v")) {
 
                 System.out.println("Version Alpha 0.1 \n test version \n Built 10/04/2020 8:21:16");
+                System.out.println("JVM running in: " + System.getProperty("sun.arch.data.model") + " bit mode");
+                System.out.println("OS Arch: " + System.getProperty("os.arch"));
+                System.out.println("VM Version: " + ManagementFactory.getRuntimeMXBean().getSpecVersion());
+                exit();
 
             }
 
