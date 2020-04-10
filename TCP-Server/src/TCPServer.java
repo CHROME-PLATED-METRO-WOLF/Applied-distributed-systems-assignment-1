@@ -15,9 +15,10 @@ public class TCPServer {
     static ArrayList<Student> studentList = new ArrayList();
     static ArrayList<LogEntry> logList = new ArrayList();
     //static ArrayList<Thread> clients = new ArrayList();
-   static List<Thread> clients = Collections.synchronizedList(new ArrayList());
+    static List<Thread> clients = Collections.synchronizedList(new ArrayList());
     public static String studentFileName;
     public static String logFileName;
+    static Logger logger;
 
     public static void main(String args[]) {
 
@@ -25,7 +26,7 @@ public class TCPServer {
         argOptions.setPredefined();
         argOptions.setProgramName("TCPServer");
         argOptions.parseOptions();
-        Logger logger;
+        
         if (argOptions.getLoggingLevel() == 0) {
             logger = new Logger(false, false);
         } else if (argOptions.getLoggingLevel() == 1) {
@@ -44,10 +45,13 @@ public class TCPServer {
                 logger = new Logger(true, true, argOptions.getLogFile());
             }
 
+        }else
+        {
+            logger = new Logger(false, false);
         }
 
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
-        System.out.println("Max Threads: " + argOptions.getMaxConnections());
+        logger.log("Max Threads: " + argOptions.getMaxConnections());
 
         try {
             //server initialisations
@@ -58,17 +62,17 @@ public class TCPServer {
             fileManager.start();
             ServerSocket listenSocket = new ServerSocket(argOptions.getServerPort());
 
-            System.out.println("Server started on port: " + listenSocket.getLocalPort());
-            //System.out.println("Max connections set to: " + argOptions.getMaxConnections());
+            logger.log("Server started on port: " + listenSocket.getLocalPort());
+            //logger.log("Max connections set to: " + argOptions.getMaxConnections());
 
             while (true) {
 
                 if (clients.size() < argOptions.getMaxConnections()) {
-                    System.out.println("Num Clients Connected: " + clients.size());
+                    logger.log("Num Clients Connected: " + clients.size());
                     Socket clientSocket = listenSocket.accept();
-                    System.out.println("Client connected: " + clientSocket.getPort());
+                    logger.log("Client connected: " + clientSocket.getPort());
 
-                    System.out.println("Creating thread");
+                    logger.log("Creating thread");
                     Connection c = new Connection(clientSocket, studentList, logList, clients);
                     pool.execute(c);
 
@@ -84,7 +88,7 @@ public class TCPServer {
             }
 
         } catch (IOException e) {
-            System.out.println("Listen socket:" + e.getMessage());
+            logger.log("Listen socket:" + e.getMessage());
         }
 
     }
