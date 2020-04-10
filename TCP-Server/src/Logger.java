@@ -73,7 +73,8 @@ public class Logger {
     private void writeToFile(String data) {
 
         try {
-            br.write(data);
+            br.write(data + "\n");
+            br.flush();
         } catch (IOException ex) {
             System.out.println("INTERNAL ERROR: Cannot write log message to file");
         }
