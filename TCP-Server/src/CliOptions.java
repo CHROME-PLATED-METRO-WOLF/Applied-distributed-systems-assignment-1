@@ -223,5 +223,15 @@ public class CliOptions {
     int getFileWriteDelay() {
         return this.fileWriteDelay;
     }
+    
+    int getLoggingLevel()
+    {
+        return this.loggingLevel;
+    }
+    
+    String getLogFile()
+    {
+        return this.logFile;
+    }
 
 }
