@@ -60,34 +60,36 @@ public class FileManager extends Thread {
 
     private void saveLog() {
 
-        //fix this later
-        File studentFile = new File("logentry.txt");
-        FileWriter studentWriter = null;
-        BufferedWriter studentBufferedWriter = null;
-
-        studentWriter = new FileWriter(studentFile);
-        studentBufferedWriter = new BufferedWriter(studentWriter);
-
-        while (exit = false) {
-            try {
-                Thread.sleep(this.msInterval);
-                int iterator = 0;
-                Student currentStudent;
-                while (iterator < studentList.size()) {
-                    currentStudent = this.studentList.get(iterator);
-                    studentBufferedWriter.write(currentStudent.getStudentNumber() + separator + currentStudent.getPinCode());
+        try {
+            //fix this later
+            File studentFile = new File("logentry.txt");
+            FileWriter studentWriter = null;
+            BufferedWriter studentBufferedWriter = null;
+            
+            studentWriter = new FileWriter(studentFile);
+            studentBufferedWriter = new BufferedWriter(studentWriter);
+            
+            while (exit = false) {
+                try {
+                    Thread.sleep(this.msInterval);
+                    int iterator = 0;
+                    Student currentStudent;
+                    while (iterator < studentList.size()) {
+                        currentStudent = this.studentList.get(iterator);
+                        studentBufferedWriter.write(currentStudent.getStudentNumber() + separator + currentStudent.getPinCode());
+                    }
+                    
+                } catch (InterruptedException ex) {
+                    System.out.println("CRITICAL ERROR: cant sleep");
+                } catch (IOException ex) {
+                    Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-            } catch (InterruptedException ex) {
-                System.out.println("CRITICAL ERROR: cant sleep");
             }
+        } catch (IOException ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    catch (IOException ex
-
     
-        ) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-    }
+    
 }
-}
+
