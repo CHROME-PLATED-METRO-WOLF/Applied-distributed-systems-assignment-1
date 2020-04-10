@@ -14,7 +14,7 @@ public class TCPClient {
     public static void main(String[] args) {
 
         int count = 0;
-        while (count < 500) {
+        while (count < 100) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
