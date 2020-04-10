@@ -156,17 +156,12 @@ public class CliOptions {
                 this.logFile = cmd.getOptionValue("lf");
 
             }
-            
-            
-            if (cmd.hasOption("v")) {
-               
-                    
-                    System.out.println("Version Alpha 0.1 \n test version \n Built 10/04/2020 8:21:16");
 
-                
+            if (cmd.hasOption("v")) {
+
+                System.out.println("Version Alpha 0.1 \n test version \n Built 10/04/2020 8:21:16");
+
             }
-            
-            
 
         } catch (ParseException e) {
             printHelp();
@@ -217,16 +212,8 @@ public class CliOptions {
         return this.maxConnections;
     }
 
-    void setMsInterval(int interval) {
-        this.msInterval = interval;
-    }
-
     int getMsInterval() {
         return this.msInterval;
-    }
-
-    void setMsDelay(int delay) {
-        this.msDelay = delay;
     }
 
     int getMsDelay() {
