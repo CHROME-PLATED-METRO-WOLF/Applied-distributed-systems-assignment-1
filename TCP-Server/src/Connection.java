@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,10 +20,10 @@ class Connection extends Thread {
     ArrayList<Student> studentList = new ArrayList();
     //create array list which stores all log entrys
     ArrayList<LogEntry> logList = new ArrayList();
-    ArrayList<Thread> clients;
+    List<Thread> clients;
 
     //default constructor
-    public Connection(Socket clientSocket, ArrayList<Student> studentList, ArrayList<LogEntry> logList, ArrayList<Thread> clients) {
+    public Connection(Socket clientSocket, ArrayList<Student> studentList, ArrayList<LogEntry> logList, List<Thread> clients) {
         this.studentList = studentList;
         this.logList = logList;
         this.clientSocket = clientSocket;
