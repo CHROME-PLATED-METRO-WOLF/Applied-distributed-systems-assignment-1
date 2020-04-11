@@ -105,23 +105,27 @@ public class TCPServer {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                if (logger == null) {
-                    //maybe preform a check to see if the lists have been loaded yet
-                    System.out.println("System interupt detected!");
-                    System.out.println("preforming shutdown tasks");
-                    System.out.println("Logger object not created, most likely early shutdown");
-                    System.out.println("No need to save lists");
-                } else {
-                    //add code to actually save all the data
-                    logger.log("System interupt detected!");
-                    logger.log("preforming shutdown task");
-                    logger.log("saving lists");
-                    logger.log("done shutting down");
-                    logger.stopLogger();
-                }
+                shutdownServer();
 
             }
         });
+    }
+
+    static void shutdownServer() {
+        if (logger == null) {
+            //maybe preform a check to see if the lists have been loaded yet
+            System.out.println("System interupt detected!");
+            System.out.println("preforming shutdown tasks");
+            System.out.println("Logger object not created, most likely early shutdown");
+            System.out.println("No need to save lists");
+        } else {
+            //add code to actually save all the data
+            logger.log("System interupt detected!");
+            logger.log("preforming shutdown task");
+            logger.log("saving lists");
+            logger.log("done shutting down");
+            logger.stopLogger();
+        }
     }
 
 }
