@@ -52,11 +52,11 @@ public class FileManager extends Thread {
                     }
 
                 } catch (InterruptedException ex) {
-                    System.out.println("CRITICAL ERROR: cant sleep");
+                    TCPServer.logger.log("CRITICAL ERROR: cant sleep");
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Error cannot write to file");
+            TCPServer.logger.log("Error cannot write to file");
         }
     }
 
@@ -82,13 +82,13 @@ public class FileManager extends Thread {
                     }
 
                 } catch (InterruptedException ex) {
-                    System.out.println("CRITICAL ERROR: cant sleep");
+                    TCPServer.logger.log("CRITICAL ERROR: cant sleep");
                 } catch (IOException ex) {
-                    System.out.println("Error cannot write to file");
+                    TCPServer.logger.log("Error cannot write to file");
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Error cannot write to file");
+            TCPServer.logger.log("Error cannot write to file");
         }
     }
 

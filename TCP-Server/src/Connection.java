@@ -6,8 +6,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 class Connection extends Thread {
 // when a user connects this class is created for that user and handles all processing
@@ -29,7 +27,7 @@ class Connection extends Thread {
         this.logList = logList;
         this.clientSocket = clientSocket;
         this.clients = clients;
-        
+
         try {
             //the socket is passed in and assigned to a variable so we can access information about the clients session
 
@@ -59,26 +57,23 @@ class Connection extends Thread {
 
             }
         } catch (IOException ex) {
-            
 
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            TCPServer.logger.log("Error data read cannot be converted to an object");
         }
         try {
             clientSocket.close();
-            
+
         } catch (IOException e) {/*close failed*/
             TCPServer.logger.log("Error closing socket!");
 
         }
-        
-       closeSocket(); 
+
+        closeSocket();
 
     }
-    
- 
-    private void closeSocket()
-    {
+
+    private void closeSocket() {
         try {
             clientSocket.close();
             clients.remove(this);
@@ -88,6 +83,5 @@ class Connection extends Thread {
             TCPServer.logger.log("ERROR: CANT CLOSE SOCKET");
         }
     }
-    
-    
+
 }
