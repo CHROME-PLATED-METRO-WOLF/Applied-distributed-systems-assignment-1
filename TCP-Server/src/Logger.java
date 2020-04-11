@@ -5,8 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class Logger {
 
@@ -14,6 +19,9 @@ public class Logger {
     BufferedWriter br = null;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime timeStamp;
+    LocalDateTime startTime;
+    LocalDateTime endTime;
+    Duration runTime;
     boolean print;
     boolean writeToFile;
     File file;
@@ -22,6 +30,7 @@ public class Logger {
         this.print = false;
         this.writeToFile = false;
         initialiseFile();
+        this.startTime = LocalDateTime.now();
     }
 
     Logger(boolean print, boolean writeToFile) {
@@ -29,6 +38,7 @@ public class Logger {
         this.writeToFile = writeToFile;
         this.file = new File("lastRun.log");
         initialiseFile();
+        this.startTime = LocalDateTime.now();
     }
 
     Logger(boolean print, boolean writeToFile, String file) {
@@ -36,6 +46,7 @@ public class Logger {
         this.writeToFile = writeToFile;
         this.file = new File(file);
         initialiseFile();
+        this.startTime = LocalDateTime.now();
     }
 
     Logger(boolean print, boolean writeToFile, File file) {
@@ -43,6 +54,7 @@ public class Logger {
         this.writeToFile = writeToFile;
         this.file = file;
         initialiseFile();
+        this.startTime = LocalDateTime.now();
     }
 
     void log(String data) {
@@ -83,6 +95,22 @@ public class Logger {
             br.flush();
         } catch (IOException ex) {
             System.out.println("INTERNAL ERROR: Cannot write log message to file");
+        }
+
+    }
+
+    void stopLogger() {
+        endTime = LocalDateTime.now();
+        runTime = Duration.between(endTime.toInstant(ZoneOffset.UTC), startTime.toInstant(ZoneOffset.UTC));
+
+        try {
+            log("Program start time: " + dtf.format(startTime));
+            log("Program end time: " + dtf.format(endTime));
+            log("Total run time: " + runTime);
+            fr.close();
+            br.close();
+        } catch (IOException ex) {
+            log("INTERNAL ERROR: Cannot close logger streams");
         }
 
     }
