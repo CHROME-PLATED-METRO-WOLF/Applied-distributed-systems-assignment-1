@@ -2,11 +2,14 @@
 //package tcpserver;
 import java.net.*;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 
 public class TCPServer {
 
@@ -19,6 +22,7 @@ public class TCPServer {
     public static String studentFileName;
     public static String logFileName;
     static Logger logger;
+    static long totalClientsServed = 0;
 
     public static void main(String args[]) {
 
@@ -50,7 +54,7 @@ public class TCPServer {
         } else {
             logger = new Logger(false, false);
         }
-
+displayStartMessage();
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
         logger.log("Max Threads: " + argOptions.getMaxConnections());
 
@@ -78,7 +82,7 @@ public class TCPServer {
                     pool.execute(c);
 
                     clients.add(c);
-
+                    totalClientsServed++;
                 } else {
                     try {
                         Thread.sleep(100);
@@ -124,7 +128,40 @@ public class TCPServer {
             logger.log("preforming shutdown task");
             logger.log("saving lists");
             logger.log("done shutting down");
+            logger.log("Total number of clients served: " + totalClientsServed);
             logger.stopLogger();
+        }
+    }
+ 
+    static void displayStartMessage() {
+        InputStream input = null;
+        try {
+            input = new BufferedInputStream(new FileInputStream("startMessage.txt"));
+            byte[] buffer = new byte[8192];
+            try {
+                for (int length = 0; (length = input.read(buffer)) != -1;) {
+                    System.out.write(buffer, 0, length);
+                }
+            } catch (IOException ex) {
+                logger.log("welcome message not found startMessage.txt");
+            } finally {
+                try {
+                    input.close();
+                } catch (IOException ex) {
+                    logger.log("INTERNAL ERROR: Cannot close streams");
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            logger.log("INTERNAL ERROR: File not found");
+        } finally {
+            try {
+                input.close();
+            } catch (IOException ex) {
+                logger.log("INTERNAL ERROR: Cannot close streams");
+            }catch( java.lang.NullPointerException ex)
+            {
+             logger.log("INTERNAL ERROR: Cannot close stream");   
+            }
         }
     }
 
