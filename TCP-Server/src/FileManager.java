@@ -17,12 +17,12 @@ public class FileManager extends Thread {
     private boolean exit = false;
     final private String separator = " ";
 
-    FileManager(ArrayList<Student> studentList, ArrayList<LogEntry> logList) {
+    FileManager(List<Student> studentList, List<LogEntry> logList) {
         this.studentList = studentList;
         this.logList = logList;
     }
 
-    FileManager(ArrayList<Student> studentList, ArrayList<LogEntry> logList, int msInterval) {
+    FileManager(List<Student> studentList, List<LogEntry> logList, int msInterval) {
         this.studentList = studentList;
         this.logList = logList;
         this.msInterval = msInterval;
