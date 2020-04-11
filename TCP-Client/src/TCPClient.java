@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TCPClient {
 
@@ -12,18 +13,20 @@ public class TCPClient {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-        int count = 0;
-        while (count < 100) {
+        long randomNum = 100;
+        long count = 0;
+        while (true) {
             try {
-                Thread.sleep(100);
+                
+                Thread.sleep(randomNum);
             } catch (InterruptedException ex) {
                 Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);
             }
             connection c = new connection();
-            c.setName(Integer.toString(count));
+            c.setName(Long.toString(count));
             c.start();
             count++;
+            randomNum = ThreadLocalRandom.current().nextLong(30000, 1800000 + 1);
         }
     }
 
@@ -31,6 +34,7 @@ public class TCPClient {
 
         public void run() {
             try {
+                long randomNum = ThreadLocalRandom.current().nextLong(10000, 1500000 + 1);
 
                 ObjectOutputStream out = null;
                 ObjectInputStream in = null;
@@ -39,8 +43,8 @@ public class TCPClient {
                 System.out.println("Connected to server: " + clientSocket.getInetAddress() + " On port: " + clientSocket.getLocalPort());
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
                 in = new ObjectInputStream(clientSocket.getInputStream());
-                int i = 0;
-                while (i < 20) {
+                long i = 0;
+                while (i < randomNum) {
 
                     Thread.sleep(1000);
                     // out.writeObject("test");
