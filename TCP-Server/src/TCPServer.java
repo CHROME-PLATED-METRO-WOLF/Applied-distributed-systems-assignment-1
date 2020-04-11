@@ -12,8 +12,8 @@ public class TCPServer {
 
     //Options options = new Options();
     // final static int defaultServerPort = 8888;
-    static ArrayList<Student> studentList = new ArrayList();
-    static ArrayList<LogEntry> logList = new ArrayList();
+    static List<Student> studentList = Collections.synchronizedList(new ArrayList());
+    static List<LogEntry> logList = Collections.synchronizedList(new ArrayList());
     //static ArrayList<Thread> clients = new ArrayList();
     static List<Thread> clients = Collections.synchronizedList(new ArrayList());
     public static String studentFileName;
@@ -26,7 +26,7 @@ public class TCPServer {
         argOptions.setPredefined();
         argOptions.setProgramName("TCPServer");
         argOptions.parseOptions();
-//creates the shutdown hook after the logger has been created
+        //creates the shutdown hook after the logger has been created
         createShutdownHook();
 
         if (argOptions.getLoggingLevel() == 0) {
