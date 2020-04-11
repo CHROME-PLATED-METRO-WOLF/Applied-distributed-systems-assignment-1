@@ -5,12 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class Logger {
 
     FileWriter fr = null;
     BufferedWriter br = null;
-
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    LocalDateTime timeStamp;
     boolean print;
     boolean writeToFile;
     File file;
@@ -43,8 +46,10 @@ public class Logger {
     }
 
     void log(String data) {
+        timeStamp = LocalDateTime.now();
+        data = dtf.format(timeStamp) + ": " + data + "\n";
         if (print == true) {
-            System.out.println(data);
+            System.out.print(data);
         }
         if (writeToFile == true) {
             writeToFile(data);
@@ -73,7 +78,8 @@ public class Logger {
     private void writeToFile(String data) {
 
         try {
-            br.write(data + "\n");
+
+            br.write(data);
             br.flush();
         } catch (IOException ex) {
             System.out.println("INTERNAL ERROR: Cannot write log message to file");
