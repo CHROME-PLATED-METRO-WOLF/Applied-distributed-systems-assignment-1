@@ -71,7 +71,7 @@ public class TCPServer {
                 if (clients.size() < argOptions.getMaxConnections()) {
                     logger.log("Num Clients Connected: " + clients.size());
                     Socket clientSocket = listenSocket.accept();
-                    logger.log("Client connected: " + clientSocket.getPort());
+                    logger.log("Client connected: " + clients.size() + 1 + " Return port: " + clientSocket.getPort());
 
                     logger.log("Creating thread");
                     Connection c = new Connection(clientSocket, studentList, logList, clients);
@@ -117,6 +117,7 @@ public class TCPServer {
                     logger.log("preforming shutdown task");
                     logger.log("saving lists");
                     logger.log("done shutting down");
+                    logger.stopLogger();
                 }
 
             }
