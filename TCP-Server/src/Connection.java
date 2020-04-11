@@ -61,13 +61,7 @@ class Connection extends Thread {
         } catch (ClassNotFoundException ex) {
             TCPServer.logger.log("Error data read cannot be converted to an object");
         }
-        try {
-            clientSocket.close();
-
-        } catch (IOException e) {/*close failed*/
-            TCPServer.logger.log("Error closing socket!");
-
-        }
+      
 
         closeSocket();
 
