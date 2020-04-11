@@ -4,13 +4,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Collections;
+import java.util.List;
 
 public class FileManager extends Thread {
 
-    private ArrayList<Student> studentList;
-    private ArrayList<LogEntry> logList;
+    private List<Student> studentList = Collections.synchronizedList(new ArrayList());
+    ;
+    private List<LogEntry> logList = Collections.synchronizedList(new ArrayList());
+    ;
     private int msInterval;
     private boolean exit = false;
     final private String separator = " ";
@@ -54,7 +56,7 @@ public class FileManager extends Thread {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error cannot write to file");
         }
     }
 
@@ -65,10 +67,10 @@ public class FileManager extends Thread {
             File studentFile = new File("logentry.txt");
             FileWriter studentWriter = null;
             BufferedWriter studentBufferedWriter = null;
-            
+
             studentWriter = new FileWriter(studentFile);
             studentBufferedWriter = new BufferedWriter(studentWriter);
-            
+
             while (exit = false) {
                 try {
                     Thread.sleep(this.msInterval);
@@ -78,18 +80,16 @@ public class FileManager extends Thread {
                         currentStudent = this.studentList.get(iterator);
                         studentBufferedWriter.write(currentStudent.getStudentNumber() + separator + currentStudent.getPinCode());
                     }
-                    
+
                 } catch (InterruptedException ex) {
                     System.out.println("CRITICAL ERROR: cant sleep");
                 } catch (IOException ex) {
-                    Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Error cannot write to file");
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error cannot write to file");
         }
     }
-    
-    
-}
 
+}
