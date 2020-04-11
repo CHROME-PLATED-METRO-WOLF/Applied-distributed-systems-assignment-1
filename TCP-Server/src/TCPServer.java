@@ -54,7 +54,7 @@ public class TCPServer {
         } else {
             logger = new Logger(false, false);
         }
-displayStartMessage();
+        displayStartMessage();
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
         logger.log("Max Threads: " + argOptions.getMaxConnections());
 
@@ -132,7 +132,7 @@ displayStartMessage();
             logger.stopLogger();
         }
     }
- 
+
     static void displayStartMessage() {
         InputStream input = null;
         try {
@@ -158,9 +158,8 @@ displayStartMessage();
                 input.close();
             } catch (IOException ex) {
                 logger.log("INTERNAL ERROR: Cannot close streams");
-            }catch( java.lang.NullPointerException ex)
-            {
-             logger.log("INTERNAL ERROR: Cannot close stream");   
+            } catch (java.lang.NullPointerException ex) {
+                logger.log("INTERNAL ERROR: Cannot close stream");
             }
         }
     }
