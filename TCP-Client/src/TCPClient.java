@@ -2,10 +2,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class TCPClient {
-
+    
     public static void main(String[] args) {
         Logger logger = new Logger(true, true);
         int option = 0;
@@ -14,31 +16,40 @@ public class TCPClient {
         int port;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Socket clientSocket;
-
+        ObjectOutputStream out = null;
+        ObjectInputStream in = null;
+        
         logger.log("Welcome to TCPClient");
         while (true) {
-
+            
             logger.log("Please enter server address to connect to");
             try {
                 ipAddress = reader.readLine();
                 logger.log("Please enter server address to connect to");
                 port = Integer.parseInt(reader.readLine());
-
+                
                 try {
                     clientSocket = new Socket(ipAddress, port);
                     break;
                 } catch (IOException ex) {
                     logger.log("Error cannot connect");
                 }
-
+                
             } catch (IOException ex) {
                 logger.log("ERROR cannot read input");
             } catch (java.lang.NumberFormatException e) {
                 logger.log("Please enter a number for the port");
             }
-
+            
         }
-
+        
+        try {
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
+        } catch (IOException ex) {
+            logger.log("Error cannot create streams from socket");
+        }
+        
         while (option != 3) {
             logger.log("Please Make Your Selection");
             logger.log("******************");
@@ -57,9 +68,9 @@ public class TCPClient {
             } catch (java.lang.NumberFormatException e) {
                 logger.log("Error: Please enter a number between 1 and 3");
             }
-
+            
         }
-
+        
     }
 }
 
