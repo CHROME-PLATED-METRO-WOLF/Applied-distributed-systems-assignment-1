@@ -16,6 +16,7 @@ public class TCPServer {
     static List<LogEntry> logList = Collections.synchronizedList(new ArrayList());
     //static ArrayList<Thread> clients = new ArrayList();
     static List<Thread> clients = Collections.synchronizedList(new ArrayList());
+    static FileManager fileManager;
     public static String studentFileName;
     public static String logFileName;
     static Logger logger;
@@ -52,6 +53,8 @@ public class TCPServer {
             logger = new Logger(false, false);
         }
         displayStartMessage();
+        fileManager = new FileManager(studentList, logList, argOptions.getFileWriteDelay());
+        fileManager.start();
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
         logger.log("Max Threads: " + argOptions.getMaxConnections());
 
@@ -60,8 +63,6 @@ public class TCPServer {
             //the port wont be hardcoded in the final product it will take a command line argument
             //and will have a default value of probs 8888
 
-            FileManager fileManager = new FileManager(studentList, logList, argOptions.getFileWriteDelay());
-            fileManager.start();
             ServerSocket listenSocket = new ServerSocket(argOptions.getServerPort());
 
             logger.log("Server started on port: " + listenSocket.getLocalPort());
