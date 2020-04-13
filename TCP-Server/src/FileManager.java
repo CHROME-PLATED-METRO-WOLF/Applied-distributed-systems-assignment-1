@@ -10,9 +10,9 @@ import java.util.List;
 public class FileManager extends Thread {
 
     private List<Student> studentList = Collections.synchronizedList(new ArrayList());
-    ;
+
     private List<LogEntry> logList = Collections.synchronizedList(new ArrayList());
-    ;
+
     private int msInterval;
     private boolean exit = false;
     final private String separator = " ";
@@ -32,64 +32,58 @@ public class FileManager extends Thread {
 
     }
 
-    private void saveStudents() {
+    private void saveFile(List<Object> list, String File, boolean append) {
+        File file = new File(File);
+        FileWriter writer = null;
+        BufferedWriter bufferedWriter = null;
         try {
-            File studentFile = new File("studententry.txt");
-            FileWriter studentWriter = null;
-            BufferedWriter studentBufferedWriter = null;
+            //fix this later
 
-            studentWriter = new FileWriter(studentFile);
-            studentBufferedWriter = new BufferedWriter(studentWriter);
+            writer = new FileWriter(file);
+            bufferedWriter = new BufferedWriter(writer);
 
             while (exit = false) {
-                try {
-                    Thread.sleep(this.msInterval);
-                    int iterator = 0;
+
+                Thread.sleep(msInterval);
+                int iterator = 0;
+
+                if (list instanceof Student) {
                     Student currentStudent;
-                    while (iterator < studentList.size()) {
-                        currentStudent = this.studentList.get(iterator);
-                        studentBufferedWriter.write(currentStudent.getStudentNumber() + separator + currentStudent.getPinCode());
+                    while (iterator < list.size()) {
+                        currentStudent = (Student) list.get(iterator);
+                        bufferedWriter.write(currentStudent.getStudentNumber() + separator + currentStudent.getPinCode());
+                    }
+                } else if (list instanceof LogEntry) {
+                    LogEntry currentLog;
+                    while (iterator < list.size()) {
+                        currentLog = (LogEntry) list.get(iterator);
+                        bufferedWriter.write(currentLog.getStudentNumber() + separator + currentLog.getPinCode());
+
                     }
 
-                } catch (InterruptedException ex) {
-                    TCPServer.logger.log("CRITICAL ERROR: cant sleep");
                 }
             }
         } catch (IOException ex) {
-            TCPServer.logger.log("Error cannot write to file");
+            TCPServer.logger.log("ERROR: IO exception when writing lists to file");
+        } catch (InterruptedException ex) {
+            TCPServer.logger.log("ERROR cannot sleep file manager thread");
+        } finally {
+            try {
+                bufferedWriter.close();
+                writer.close();
+            } catch (IOException ex) {
+
+                TCPServer.logger.log("ERROR: Log lists: cannot close streams");
+            }
         }
     }
 
-    private void saveLog() {
+    private void saveFile(List<Object> list, File file, boolean append) {
 
-        try {
-            //fix this later
-            File studentFile = new File("logentry.txt");
-            FileWriter studentWriter = null;
-            BufferedWriter studentBufferedWriter = null;
+    }
 
-            studentWriter = new FileWriter(studentFile);
-            studentBufferedWriter = new BufferedWriter(studentWriter);
-
-            while (exit = false) {
-                try {
-                    Thread.sleep(this.msInterval);
-                    int iterator = 0;
-                    Student currentStudent;
-                    while (iterator < studentList.size()) {
-                        currentStudent = this.studentList.get(iterator);
-                        studentBufferedWriter.write(currentStudent.getStudentNumber() + separator + currentStudent.getPinCode());
-                    }
-
-                } catch (InterruptedException ex) {
-                    TCPServer.logger.log("CRITICAL ERROR: cant sleep");
-                } catch (IOException ex) {
-                    TCPServer.logger.log("Error cannot write to file");
-                }
-            }
-        } catch (IOException ex) {
-            TCPServer.logger.log("Error cannot write to file");
-        }
+    void exit() {
+        exit = true;
     }
 
 }
