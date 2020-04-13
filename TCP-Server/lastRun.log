@@ -1,0 +1,14 @@
+2020/04/13 17:49:50: INTERNAL ERROR: File not found
+2020/04/13 17:49:50: INTERNAL ERROR: Cannot close stream
+2020/04/13 17:49:50: Loading Lists
+2020/04/13 17:49:50: Student List Size2
+2020/04/13 17:49:50: Log List Size0
+2020/04/13 17:49:50: Lists Loaded
+2020/04/13 17:49:50: Max Threads: 100
+2020/04/13 17:49:50: Server started on port: 8888
+2020/04/13 17:49:50: Num Clients Connected: 0
+2020/04/13 17:50:15: Saving lists
+2020/04/13 17:50:26: List size before if(list.get0: 2
+2020/04/13 17:50:41: Is This list a student? true
+2020/04/13 17:50:44: Student List size after if(list.get0: 2
+2020/04/13 17:51:12: List size before if(list.get0: 0

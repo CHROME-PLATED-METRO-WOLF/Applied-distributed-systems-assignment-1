@@ -55,6 +55,7 @@ public class TCPServer {
         displayStartMessage();
         fileManager = new FileManager(studentList, logList, argOptions.getFileWriteDelay());
         fileManager.start();
+        fileManager.loadFiles();
         ExecutorService pool = Executors.newFixedThreadPool(argOptions.getMaxConnections());
         logger.log("Max Threads: " + argOptions.getMaxConnections());
 
@@ -67,7 +68,12 @@ public class TCPServer {
 
             logger.log("Server started on port: " + listenSocket.getLocalPort());
             //logger.log("Max connections set to: " + argOptions.getMaxConnections());
-
+            /*
+            studentList.add(new Student("TestStudent", 123));
+            logList.add(new LogEntry("TestLogEntry", "Test Date", 12345));
+            studentList.add(new Student("TestStudent2", 1233));
+            logList.add(new LogEntry("TestLogEntry2", "Test Date2", 123453));
+             */
             while (true) {
 
                 if (clients.size() < argOptions.getMaxConnections()) {
@@ -125,6 +131,7 @@ public class TCPServer {
             logger.log("System interupt detected!");
             logger.log("preforming shutdown task");
             logger.log("saving lists");
+            fileManager.forceSave();
             logger.log("done shutting down");
             logger.log("Total number of clients served: " + totalClientsServed);
             logger.stopLogger();
