@@ -24,7 +24,7 @@ public class CliOptions {
 
     private int serverPort = 8888;
     private int maxConnections = 100;
-    private int fileWriteDelay;
+    private int fileWriteDelay = 180000;
 
     private int loggingLevel;
     private String logFile;
