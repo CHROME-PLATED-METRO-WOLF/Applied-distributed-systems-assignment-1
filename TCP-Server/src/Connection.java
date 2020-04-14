@@ -53,9 +53,12 @@ class Connection extends Thread {
                 // messageBox message = (messageBox) in.readObject();
                 try
                 {
-                String test = (String) in.readObject();
-
-                out.writeObject(test);
+                    TCPServer.logger.log("Reading student");
+                    Student student = (Student) in.readObject();
+                    TCPServer.logger.log("Student read");
+                    TCPServer.logger.log(student.getStudentNumber());
+                    TCPServer.logger.log(Integer.toString(student.getPinCode()));
+                    
                 }catch(java.lang.NullPointerException e)
                 {
                     TCPServer.logger.log("Test error find me in connection class!");

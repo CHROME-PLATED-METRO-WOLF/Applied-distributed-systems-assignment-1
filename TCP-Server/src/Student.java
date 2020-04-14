@@ -1,6 +1,9 @@
 
+import java.io.Serializable;
+
+
 // class for student information
-public class Student {
+public class Student implements Serializable{
 
     //private variables that hold the data for each student
     //may be expanded to hold some auxillary information such as time created, age ect

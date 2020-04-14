@@ -132,6 +132,7 @@ public class TCPServer {
             logger.log("preforming shutdown task");
             logger.log("saving lists");
             fileManager.forceSave();
+            fileManager.exit();
             logger.log("done shutting down");
             logger.log("Total number of clients served: " + totalClientsServed);
             logger.stopLogger();

@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+
 public class TCPClient {
 
     public static void main(String[] args) {
@@ -68,8 +69,34 @@ public class TCPClient {
                     exit();
                 }else if (option == 1)
                 {
-                    //take user input and create student object
+                    Student student;
+                    String studentNum;
+                    int pinCode;
                     
+                    
+                    try {
+                        logger.log("Enter student number");
+                        studentNum = reader.readLine();
+                        logger.log("Enter student pincode");
+                        pinCode = Integer.parseInt(reader.readLine());
+                        student = new Student(studentNum, pinCode);
+                        String command = "login";
+                       // out.writeObject(command);
+                       // out.flush();
+                        logger.log("Writing student");
+                        out.writeObject(student);
+                        out.flush();
+                        out.close();
+                        logger.log("Student written");
+                        //boolean answer = (boolean) in.readObject();
+                       // logger.log(Boolean.toString(answer));
+
+                    } catch (java.lang.NumberFormatException e) {
+                        logger.log("Please enter a valid number for pincode");
+                        
+                    } //catch (ClassNotFoundException ex) {
+                     //   logger.log("Data returned not boolean");
+                   // }
                 }
             } catch (IOException ex) {
                 logger.log("ERROR cannot read input");
